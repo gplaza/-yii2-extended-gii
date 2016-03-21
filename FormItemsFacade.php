@@ -47,7 +47,7 @@ class FormItemsFacade
     public static function generateField($attribute, $value = [], $file_tpe = Generator::TEMPLATE_TYPE_PHP, $name = null, $options = [])
     {
         switch ($file_tpe) {
-            case Generator::TEMPLATE_TYPE_TWIG;
+            case Generator::TEMPLATE_TYPE_BOILERPLATE;
                 $delimiter = '.';
                 $field_string = "form{$delimiter}field(model, '{$attribute}')";
                 //$options_container = '{' . preg_replace('|\=>|', ':', $options) . '}';

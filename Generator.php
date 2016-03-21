@@ -39,7 +39,7 @@ use Yii;
  */
 abstract class Generator extends Model
 {
-    const TEMPLATE_TYPE_TWIG = 2;
+    const TEMPLATE_TYPE_BOILERPLATE = 2;
     const TEMPLATE_TYPE_PHP = 1;
     /**
      * @var array a list of available code templates. The array keys are the template names,
@@ -66,15 +66,15 @@ abstract class Generator extends Model
      * Allow one to choose extension of newly generated files (see constants TEMPLATE_TYPE_).
      * At this time there are twig-files or regular php-files
      */
-    public $templateType = self::TEMPLATE_TYPE_PHP;
+    public $templateType = self::TEMPLATE_TYPE_BOILERPLATE;
     /**
      * @var array hardcoded list of available file types. The array key are extension-codes (see constants TEMPLATE_TYPE_),
      * and the array values are corresponding file extensions.
      * This is readonly property.
      */
     protected static $available_file_types = [
-        self::TEMPLATE_TYPE_PHP => 'php',
-        self::TEMPLATE_TYPE_TWIG => 'twig',
+        self::TEMPLATE_TYPE_PHP => 'Classic Yii 2.0',
+        self::TEMPLATE_TYPE_BOILERPLATE => 'Boilerplate SEGIC',
     ];
     /**
      * @return array readonly access to list of available file types.
