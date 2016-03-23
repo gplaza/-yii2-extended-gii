@@ -34,8 +34,8 @@ class Generator extends DefaultGenerator {
      * @inheritdoc
      */
     public $templates = [
-        'default' => "@vendor/generators/model/segic",
-        'Yii' => "@vendor/generators/model/default",
+        'default' => "@vendor/segic/yii2-extended-gii/generators/model/segic",
+        'Yii' => "@vendor/segic/yii2-extended-gii/generators/model/default",
     ];
 
     // TODO : implement
