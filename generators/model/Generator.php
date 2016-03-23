@@ -9,7 +9,6 @@
 namespace aayaresko\gii\generators\model;
 
 use aayaresko\gii\CodeFile;
-use aayaresko\gii\FormItemsFacade;
 use yii\db\ActiveRecord;
 use yii\db\Schema;
 use yii\helpers\Inflector;
@@ -35,8 +34,8 @@ class Generator extends DefaultGenerator {
      * @inheritdoc
      */
     public $templates = [
-        'default' => "@vendor/generators/model/default",
-        'segic' => "@vendor/generators/model/segic",
+        'default' => "@vendor/generators/model/segic",
+        'Yii' => "@vendor/generators/model/default",
     ];
 
     // TODO : implement

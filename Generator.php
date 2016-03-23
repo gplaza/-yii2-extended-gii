@@ -39,8 +39,8 @@ use Yii;
  */
 abstract class Generator extends Model
 {
-    const TEMPLATE_TYPE_BOILERPLATE = 2;
-    const TEMPLATE_TYPE_PHP = 1;
+    const TEMPLATE_TYPE_BOILERPLATE = 1;
+    const TEMPLATE_TYPE_PHP = 2;
     /**
      * @var array a list of available code templates. The array keys are the template names,
      * and the array values are the corresponding template paths or path aliases.
@@ -73,8 +73,8 @@ abstract class Generator extends Model
      * This is readonly property.
      */
     protected static $available_file_types = [
-        self::TEMPLATE_TYPE_PHP => 'Classic Yii 2.0',
         self::TEMPLATE_TYPE_BOILERPLATE => 'Boilerplate SEGIC',
+        self::TEMPLATE_TYPE_PHP => 'Classic Yii 2.0',
     ];
     /**
      * @return array readonly access to list of available file types.
