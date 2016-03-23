@@ -12,14 +12,6 @@
 /* @var $rules string[] list of validation rules */
 /* @var $relations array list of relations (name => relation declaration) */
 
-
-/**
- * Si el modelo contiene un campo id y otro nombre, se generar el metodo getOptionList
- */
-$generateGetOptionListMethod = false;
-$countFields = 0;
-
-
 echo "<?php\n";
 ?>
 
@@ -32,13 +24,7 @@ use Yii;
 *
 <?php foreach ($tableSchema->columns as $column): ?>
     * @property <?= "{$column->phpType} \${$column->name}\n" ?>
-    <?php if ($column->name == 'id' || $column->name == 'nombre') {
-        $countFields++;
-    } ?>
 <?php endforeach; ?>
-<?php if ($countFields == 2) {
-    $generateGetOptionListMethod = true;
-} ?>
 <?php if (!empty($relations)): ?>
     *
     <?php foreach ($relations as $name => $relation): ?>
@@ -107,24 +93,6 @@ return [
     public static function find()
     {
     return new <?= $queryClassFullName ?>(get_called_class());
-    }
-<?php endif; ?>
-<?php if ($generateGetOptionListMethod): ?>
-    /**
-    * Generates the data suitable for list-based HTML elements
-    **/
-    public function getOptionList()
-    {
-    return CHtml::listData($this->findAll(), 'id', 'nombre');
-    }
-<?php else: ?>
-    /**
-    * Generates the data suitable for list-based HTML elements
-    * stub version
-    **/
-    public function getOptionList()
-    {
-    return [];
     }
 <?php endif; ?>
 }
