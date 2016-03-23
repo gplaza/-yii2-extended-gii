@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -29,34 +30,34 @@ use Yii;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class DefaultGenerator extends \aayaresko\gii\Generator
-{
+class DefaultGenerator extends \aayaresko\gii\Generator {
+
     public $modelClass;
     public $controllerClass;
     public $viewPath;
     public $baseControllerClass = 'yii\web\Controller';
     public $indexWidgetType = 'grid';
     public $searchModelClass = '';
+
     /**
      * @inheritdoc
      */
-    public function getName()
-    {
+    public function getName() {
         return 'CRUD Generator';
     }
+
     /**
      * @inheritdoc
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return 'This generator generates a controller and views that implement CRUD (Create, Read, Update, Delete)
             operations for the specified data model.';
     }
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return array_merge(parent::rules(), [
             [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
             [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
@@ -74,11 +75,11 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             ['viewPath', 'safe'],
         ]);
     }
+
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return array_merge(parent::attributeLabels(), [
             'modelClass' => 'Model Class',
             'controllerClass' => 'Controller Class',
@@ -88,11 +89,11 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             'searchModelClass' => 'Search Model Class',
         ]);
     }
+
     /**
      * @inheritdoc
      */
-    public function hints()
-    {
+    public function hints() {
         return array_merge(parent::hints(), [
             'modelClass' => 'This is the ActiveRecord class associated with the table that CRUD will be built upon.
                 You should provide a fully qualified class name, e.g., <code>app\models\Post</code>.',
@@ -111,25 +112,25 @@ class DefaultGenerator extends \aayaresko\gii\Generator
                 qualified namespaced class name, e.g., <code>app\models\PostSearch</code>.',
         ]);
     }
+
     /**
      * @inheritdoc
      */
-    public function requiredTemplates()
-    {
+    public function requiredTemplates() {
         return ['controller.php'];
     }
+
     /**
      * @inheritdoc
      */
-    public function stickyAttributes()
-    {
+    public function stickyAttributes() {
         return array_merge(parent::stickyAttributes(), ['baseControllerClass', 'indexWidgetType']);
     }
+
     /**
      * Checks if model class is valid
      */
-    public function validateModelClass()
-    {
+    public function validateModelClass() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pk = $class::primaryKey();
@@ -137,11 +138,11 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             $this->addError('modelClass', "The table associated with $class must have primary key(s).");
         }
     }
+
     /**
      * @inheritdoc
      */
-    public function generate()
-    {
+    public function generate() {
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
         $files = [
             new CodeFile($controllerFile, $this->render('controller.php')),
@@ -162,28 +163,28 @@ class DefaultGenerator extends \aayaresko\gii\Generator
         }
         return $files;
     }
+
     /**
      * @return string the controller ID (without the module ID prefix)
      */
-    public function getControllerID()
-    {
+    public function getControllerID() {
         $pos = strrpos($this->controllerClass, '\\');
         $class = substr(substr($this->controllerClass, $pos + 1), 0, -10);
         return Inflector::camel2id($class);
     }
+
     /**
      * @return string the controller view path
      */
-    public function getViewPath()
-    {
+    public function getViewPath() {
         if (empty($this->viewPath)) {
             return Yii::getAlias('@app/views/' . $this->getControllerID());
         } else {
             return Yii::getAlias($this->viewPath);
         }
     }
-    public function getNameAttribute()
-    {
+
+    public function getNameAttribute() {
         foreach ($this->getColumnNames() as $name) {
             if (!strcasecmp($name, 'name') || !strcasecmp($name, 'title')) {
                 return $name;
@@ -194,13 +195,13 @@ class DefaultGenerator extends \aayaresko\gii\Generator
         $pk = $class::primaryKey();
         return $pk[0];
     }
+
     /**
      * Generates code for active field
      * @param string $attribute
      * @return string
      */
-    public function generateActiveField($attribute)
-    {
+    public function generateActiveField($attribute) {
         $tableSchema = $this->getTableSchema();
         if ($tableSchema === false || !isset($tableSchema->columns[$attribute])) {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)) {
@@ -226,7 +227,7 @@ class DefaultGenerator extends \aayaresko\gii\Generator
                     $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
                 }
                 return "\$form->field(\$model, '$attribute')->dropDownList("
-                . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+                        . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)) . ", ['prompt' => ''])";
             } elseif ($column->phpType !== 'string' || $column->size === null) {
                 return "\$form->field(\$model, '$attribute')->$input()";
             } else {
@@ -234,13 +235,13 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             }
         }
     }
+
     /**
      * Generates code for active search field
      * @param string $attribute
      * @return string
      */
-    public function generateActiveSearchField($attribute)
-    {
+    public function generateActiveSearchField($attribute) {
         $tableSchema = $this->getTableSchema();
         if ($tableSchema === false) {
             return "\$form->field(\$model, '$attribute')";
@@ -252,13 +253,13 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return "\$form->field(\$model, '$attribute')";
         }
     }
+
     /**
      * Generates column format
      * @param \yii\db\ColumnSchema $column
      * @return string
      */
-    public function generateColumnFormat($column)
-    {
+    public function generateColumnFormat($column) {
         if ($column->phpType === 'boolean') {
             return 'boolean';
         } elseif ($column->type === 'text') {
@@ -273,12 +274,12 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return 'text';
         }
     }
+
     /**
      * Generates validation rules for the search model.
      * @return array the generated validation rules
      */
-    public function generateSearchRules()
-    {
+    public function generateSearchRules() {
         if (($table = $this->getTableSchema()) === false) {
             return ["[['" . implode("', '", $this->getColumnNames()) . "'], 'safe']"];
         }
@@ -314,19 +315,19 @@ class DefaultGenerator extends \aayaresko\gii\Generator
         }
         return $rules;
     }
+
     /**
      * @return array searchable attributes
      */
-    public function getSearchAttributes()
-    {
+    public function getSearchAttributes() {
         return $this->getColumnNames();
     }
+
     /**
      * Generates the attribute labels for the search model.
      * @return array the generated attribute labels (name => label)
      */
-    public function generateSearchLabels()
-    {
+    public function generateSearchLabels() {
         /* @var $model \yii\base\Model */
         $model = new $this->modelClass();
         $attributeLabels = $model->attributeLabels();
@@ -348,12 +349,12 @@ class DefaultGenerator extends \aayaresko\gii\Generator
         }
         return $labels;
     }
+
     /**
      * Generates search conditions
      * @return array
      */
-    public function generateSearchConditions()
-    {
+    public function generateSearchConditions() {
         $columns = [];
         if (($table = $this->getTableSchema()) === false) {
             $class = $this->modelClass;
@@ -393,20 +394,20 @@ class DefaultGenerator extends \aayaresko\gii\Generator
         $conditions = [];
         if (!empty($hashConditions)) {
             $conditions[] = "\$query->andFilterWhere([\n"
-                . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions)
-                . "\n" . str_repeat(' ', 8) . "]);\n";
+                    . str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $hashConditions)
+                    . "\n" . str_repeat(' ', 8) . "]);\n";
         }
         if (!empty($likeConditions)) {
             $conditions[] = "\$query" . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
         }
         return $conditions;
     }
+
     /**
      * Generates URL parameters
      * @return string
      */
-    public function generateUrlParams()
-    {
+    public function generateUrlParams() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -428,12 +429,12 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return implode(', ', $params);
         }
     }
+
     /**
      * Generates action parameters
      * @return string
      */
-    public function generateActionParams()
-    {
+    public function generateActionParams() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -443,12 +444,12 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return '$' . implode(', $', $pks);
         }
     }
+
     /**
      * Generates parameter tags for phpdoc
      * @return array parameter tags for phpdoc
      */
-    public function generateActionParamComments()
-    {
+    public function generateActionParamComments() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         $pks = $class::primaryKey();
@@ -469,12 +470,12 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return $params;
         }
     }
+
     /**
      * Returns table schema for current model class or false if it is not an active record
      * @return boolean|\yii\db\TableSchema
      */
-    public function getTableSchema()
-    {
+    public function getTableSchema() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -483,11 +484,11 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return false;
         }
     }
+
     /**
      * @return array model column names
      */
-    public function getColumnNames()
-    {
+    public function getColumnNames() {
         /* @var $class ActiveRecord */
         $class = $this->modelClass;
         if (is_subclass_of($class, 'yii\db\ActiveRecord')) {
@@ -498,4 +499,5 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             return $model->attributes();
         }
     }
+
 }

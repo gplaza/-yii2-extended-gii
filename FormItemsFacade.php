@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: aayaresko
@@ -24,8 +25,8 @@ use yii\helpers\Json;
  *
  * @package aayaresko\gii
  */
-class FormItemsFacade
-{
+class FormItemsFacade {
+
     /**
      * Create new form item for depending on specified file type.
      *
@@ -44,24 +45,31 @@ class FormItemsFacade
      * @param array $options form item additional options
      * @return string new form item for specified file extension
      */
-    public static function generateField($attribute, $value = [], $file_tpe = Generator::TEMPLATE_TYPE_PHP, $name = null, $options = [])
-    {
-        switch ($file_tpe) {
-            case Generator::TEMPLATE_TYPE_BOILERPLATE;
-                $delimiter = '.';
-                $field_string = "form{$delimiter}field(model, '{$attribute}')";
-                //$options_container = '{' . preg_replace('|\=>|', ':', $options) . '}';
-                $string_formatter = new Json();
-                $method = 'encode';
-                break;
-            default:
-                $delimiter = '->';
-                $field_string = "\$form{$delimiter}field(\$model, '{$attribute}')";
-                //$options_container = "[{$options}]";
-                $string_formatter = new VarDumper();
-                $method = 'export';
-        }
+    public static function generateField($attribute, $value = [], $file_tpe = Generator::TEMPLATE_TYPE_PHP, $name = null, $options = []) {
 
+        $delimiter = '->';
+        $field_string = "\$form{$delimiter}field(\$model, '{$attribute}')";
+        //$options_container = "[{$options}]";
+        $string_formatter = new VarDumper();
+        $method = 'export';
+
+        /*
+          switch ($file_tpe) {
+          case Generator::TEMPLATE_TYPE_BOILERPLATE;
+          $delimiter = '.';
+          $field_string = "form{$delimiter}field(model, '{$attribute}')";
+          //$options_container = '{' . preg_replace('|\=>|', ':', $options) . '}';
+          $string_formatter = new Json();
+          $method = 'encode';
+          break;
+          default:
+          $delimiter = '->';
+          $field_string = "\$form{$delimiter}field(\$model, '{$attribute}')";
+          //$options_container = "[{$options}]";
+          $string_formatter = new VarDumper();
+          $method = 'export';
+          }
+         */
         if ($name) {
             $field_string = $field_string . $delimiter . "{$name}";
 
@@ -80,9 +88,9 @@ class FormItemsFacade
             } else {
                 $field_string = "{$field_string}()";
             }
-
         }
 
         return $field_string;
     }
+
 }
