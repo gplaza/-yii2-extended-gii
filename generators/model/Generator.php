@@ -6,7 +6,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace aayaresko\gii\generators\crud;
+namespace aayaresko\gii\generators\model;
 
 use aayaresko\gii\CodeFile;
 use aayaresko\gii\FormItemsFacade;
