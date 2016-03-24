@@ -150,30 +150,18 @@ class Generator extends DefaultGenerator {
         $class = $this->modelClass;
         $pks = $class::primaryKey();
         if (count($pks) === 1) {
-            switch ($templateType) {
-                case self::TEMPLATE_TYPE_TWIG:
-                    return "'id': model.{$pks[0]}";
-                    break;
-                default:
-                    if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
-                        return "'id' => (string)\$model->{$pks[0]}";
-                    } else {
-                        return "'id' => \$model->{$pks[0]}";
-                    }
+            if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
+                return "'id' => (string)\$model->{$pks[0]}";
+            } else {
+                return "'id' => \$model->{$pks[0]}";
             }
         } else {
             $params = [];
             foreach ($pks as $pk) {
-                switch ($templateType) {
-                    case self::TEMPLATE_TYPE_TWIG:
-                        $params[] = "'{$pk}': model.{$pk}";
-                        break;
-                    default:
-                        if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
-                            $params[] = "'{$pk}' => (string)\$model->{$pk}";
-                        } else {
-                            $params[] = "'{$pk}' => \$model->{$pk}";
-                        }
+                if (is_subclass_of($class, 'yii\mongodb\ActiveRecord')) {
+                    $params[] = "'{$pk}' => (string)\$model->{$pk}";
+                } else {
+                    $params[] = "'{$pk}' => \$model->{$pk}";
                 }
             }
 
