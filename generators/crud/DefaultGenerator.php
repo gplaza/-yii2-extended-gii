@@ -471,6 +471,15 @@ class DefaultGenerator extends \aayaresko\gii\Generator {
         }
     }
 
+    public function tableSchemaContain($type) {
+        $columns = $this->getTableSchema()->columns;
+        $result = array_filter($columns, function ($e) use (&$type) {
+            return $e->type == $type;
+        });
+
+        return !empty($result);
+    }
+
     /**
      * Returns table schema for current model class or false if it is not an active record
      * @return boolean|\yii\db\TableSchema
