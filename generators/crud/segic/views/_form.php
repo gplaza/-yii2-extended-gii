@@ -14,6 +14,7 @@ if (empty($safeAttributes)) {
 }
 
 echo "<?php\n";
+echo $generator->tableSchemaContain('date')? 'use kartik\datecontrol\DateControl' : '';
 ?>
 
 use yii\helpers\Html;
