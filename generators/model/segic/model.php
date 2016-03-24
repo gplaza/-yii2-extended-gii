@@ -19,6 +19,11 @@
 $generateGetOptionListMethod = false;
 $countFields = 0;
 
+/**
+ * Si existen campos de tipo fecha se agregaran las rules correspondientes mas el behavior
+ */
+$existDateFields = false;
+
 
 echo "<?php\n";
 ?>
@@ -32,9 +37,8 @@ use Yii;
 *
 <?php foreach ($tableSchema->columns as $column): ?>
     * @property <?= "{$column->phpType} \${$column->name}\n" ?>
-    <?php if ($column->name == 'id' || $column->name == 'nombre') {
-        $countFields++;
-    } ?>
+    <?php if ($column->name == 'id' || $column->name == 'nombre') { $countFields++; } ?>
+    <?php if ($column->dbType == 'date') { $existDateFields = true; } ?>
 <?php endforeach; ?>
 <?php if ($countFields == 2) {
     $generateGetOptionListMethod = true;

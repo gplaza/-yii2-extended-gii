@@ -38,8 +38,8 @@ class Generator extends DefaultGenerator {
      * @inheritdoc
      */
     public $templates = [
-        'default' => "{__DIR__}/default",
-            // 'twig' => __DIR__ . '/twig',
+        'default' => "@vendor/segic/yii2-extended-gii/generators/crud/segic",
+        'Yii' => "@vendor/segic/yii2-extended-gii/generators/crud/default",
     ];
 
     /**
