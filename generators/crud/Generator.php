@@ -72,7 +72,9 @@ class Generator extends DefaultGenerator {
         } elseif ($column->type === 'text') {
             return $items_generator::generateField($attribute, null, $this->templateType, 'textarea', ['rows' => 6]);
         } elseif ($column->dbType === 'date') {
-            return $items_generator::generateField($attribute, 'DateControl::classname()', $this->templateType, 'widget', ['type'=> 'date']);
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type'=> 'date']);
+        }  elseif ($column->dbType === 'datetime') {
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type'=> 'datetime']);
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'passwordInput';
