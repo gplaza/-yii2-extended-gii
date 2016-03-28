@@ -56,12 +56,14 @@ class Generator extends DefaultGenerator {
      * @return string
      */
     public function generateActiveField($attribute) {
-        
+
         $items_generator = $this->items_generator;
         $tableSchema = $this->getTableSchema();
         if ($tableSchema === false || !isset($tableSchema->columns[$attribute])) {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)) {
                 return $items_generator::generateField($attribute, null, $this->templateType, 'passwordInput', null);
+            } elseif (preg_match('/^(up_machine)$/i', $attribute)) {
+                return $items_generator::generateField($attribute, '\trntv\filekit\widget\Upload', $this->templateType, 'widget', ['url' => ['upload'], 'sortable' => true, 'maxFileSize' => 10 * 1024 * 1024, 'maxNumberOfFiles' => 3,]);
             } else {
                 return $items_generator::generateField($attribute, null, $this->templateType, null, null);
             }
@@ -72,9 +74,9 @@ class Generator extends DefaultGenerator {
         } elseif ($column->type === 'text') {
             return $items_generator::generateField($attribute, null, $this->templateType, 'textarea', ['rows' => 6]);
         } elseif ($column->dbType === 'date') {
-            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type'=> 'date']);
-        }  elseif ($column->dbType === 'datetime') {
-            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type'=> 'datetime']);
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type' => 'date']);
+        } elseif ($column->dbType === 'datetime') {
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type' => 'datetime']);
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'passwordInput';

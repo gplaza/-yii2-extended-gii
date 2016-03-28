@@ -15,6 +15,10 @@ if (empty($safeAttributes)) {
 
 echo "<?php\n";
 echo $generator->tableSchemaContain('date')? 'use kartik\datecontrol\DateControl' : '';
+echo $generator->tableSchemaContain('datetime')? 'use kartik\datecontrol\DateControl' : '';
+
+//preg_grep("#^up_#", $generator->columnNames);
+
 ?>
 
 use yii\helpers\Html;
