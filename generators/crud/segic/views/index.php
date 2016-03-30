@@ -42,11 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\SerialColumn'],
         <?php
         foreach ($generator->getColumnNames() as $name) {
-            if (++$count < 6) {
-                echo "            '" . $name . "',\n";
-            } else {
-                echo "            // '" . $name . "',\n";
-            }
+            echo "            '" . $name . "',\n";
         }
         ?>
         ['class' => 'yii\grid\ActionColumn'],
@@ -83,14 +79,14 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\ActionColumn'],
         ],
         ]); ?>
-<?php else: ?>
-    <?= "<?= " ?>ListView::widget([
+    <?php else: ?>
+        <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
         return Html::a(Html::encode($model-><?= $nameAttribute ?>), ['view', <?= $urlParams ?>]);
         },
         ]) ?>
-<?php endif; ?>
+    <?php endif; ?>
 
 </div>
