@@ -44,7 +44,7 @@ use yii\filters\VerbFilter;
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends BaseController . "\n" ?>
+class <?= $controllerClass ?> extends BaseController
 {
 
     public function behaviors() {
