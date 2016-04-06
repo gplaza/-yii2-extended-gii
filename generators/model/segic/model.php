@@ -119,7 +119,8 @@ return [
     **/
     public function getOptionList()
     {
-    return CHtml::listData($this->findAll(), 'id', 'nombre');
+    $model = <?= $className ?>::find()->asArray()->all();
+    return \yii\helpers\ArrayHelper::map($model, 'id', 'nombre');
     }
 <?php else: ?>
     /**
