@@ -60,15 +60,17 @@ public static function tableName()
 return '<?= $generator->generateTableName($tableName) ?>';
 }
 
+<?php if ($generator->audit): ?>
 /**
-* Descomentar behavior para activar audit
+* Audit
+*/
 public function behaviors()
 {
     return [
         'bedezign\yii2\audit\AuditTrailBehavior'
     ];
 }
-**/
+<?php endif; ?>
 
 <?php if ($generator->db !== 'db'): ?>
 
