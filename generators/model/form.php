@@ -23,5 +23,6 @@ echo $form->field($generator, 'queryNs');
 echo $form->field($generator, 'queryClass');
 echo $form->field($generator, 'queryBaseClass');
 echo $form->field($generator, 'enableI18N')->checkbox();
+echo $form->field($generator, 'audit')->checkbox();
 echo $form->field($generator, 'messageCategory');
 echo $form->field($generator, 'useSchemaName')->checkbox();
