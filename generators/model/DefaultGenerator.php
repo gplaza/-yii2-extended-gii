@@ -42,6 +42,7 @@ class DefaultGenerator extends \aayaresko\gii\Generator
     public $queryNs = 'app\models';
     public $queryClass;
     public $queryBaseClass = 'yii\db\ActiveQuery';
+    public $audit = false;
 
 
     /**
@@ -81,7 +82,7 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             [['queryBaseClass'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
             [['generateRelations'], 'in', 'range' => [self::RELATIONS_NONE, self::RELATIONS_ALL, self::RELATIONS_ALL_INVERSE]],
             [['generateLabelsFromComments', 'useTablePrefix', 'useSchemaName', 'generateQuery'], 'boolean'],
-            [['enableI18N'], 'boolean'],
+            [['enableI18N', 'audit'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ]);
     }
@@ -104,6 +105,7 @@ class DefaultGenerator extends \aayaresko\gii\Generator
             'queryClass' => 'ActiveQuery Class',
             'queryBaseClass' => 'ActiveQuery Base Class',
             'useSchemaName' => 'Use Schema Name',
+            'audit' => 'Audit',
         ]);
     }
 
@@ -143,6 +145,7 @@ class DefaultGenerator extends \aayaresko\gii\Generator
                 the namespace part as it is specified in "ActiveQuery Namespace". You do not need to specify the class name
                 if "Table Name" ends with asterisk, in which case multiple ActiveQuery classes will be generated.',
             'queryBaseClass' => 'This is the base class of the new ActiveQuery class. It should be a fully qualified namespaced class name.',
+            'audit' => 'Activar audit trail en modelo, deshabilitado por defecto.',
         ]);
     }
 
