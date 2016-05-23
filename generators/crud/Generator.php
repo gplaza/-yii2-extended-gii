@@ -90,6 +90,21 @@ class Generator extends DefaultGenerator {
                 }
                 return $items_generator::generateField($attribute, $dropDownOptions, $this->templateType, 'dropDownList', ['prompt' => '']);
             } elseif ($column->phpType !== 'string' || $column->size === null) {
+            if($tableSchema->foreignKeys){
+                    foreach ($tableSchema->foreignKeys as $fk){                       
+                        if(!empty($fk[$attribute])){
+                        $name = "app\\models\\" . ucfirst($fk[0]);
+                        $id = 'id';
+                        $code = <<<EOS
+\$form->field(\$model, '{$attribute}')->dropDownList(
+    \yii\helpers\ArrayHelper::map({$name}::find()->all(), '{$id}', '{$id}'),
+    ['prompt' => 'Selecciona '.'{$fk[0]}']
+);
+EOS;
+    return $code;
+                        }
+                    }
+                } 
                 return $items_generator::generateField($attribute, null, $this->templateType, $input, null);
             } else {
                 return $items_generator::generateField($attribute, null, $this->templateType, $input, ['maxlength' => true]);
