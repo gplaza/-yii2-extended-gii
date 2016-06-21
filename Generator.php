@@ -544,7 +544,7 @@ abstract class Generator extends Model
                 $ph = '';
             }*/
             switch ($this->templateType) {
-                case self::TEMPLATE_TYPE_TWIG:
+                case self::TEMPLATE_TYPE_BOILERPLATE:
                     $function = "translate";
                     if (!empty($placeholders)) {
                         $ph = ', ' . preg_replace('|"|', "'", Json::encode($placeholders));
