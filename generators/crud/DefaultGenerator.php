@@ -264,6 +264,10 @@ class DefaultGenerator extends \aayaresko\gii\Generator {
             return 'boolean';
         } elseif ($column->type === 'text') {
             return 'ntext';
+        } elseif ($column->dbType === 'date') {
+            return 'date';
+        } elseif ($column->dbType === 'datetime') {
+            return 'datetime';
         } elseif (stripos($column->name, 'time') !== false && $column->phpType === 'integer') {
             return 'datetime';
         } elseif (stripos($column->name, 'email') !== false) {
