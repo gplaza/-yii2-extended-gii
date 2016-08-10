@@ -13,6 +13,7 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
+use yii\web\View;
 use <?= $generator->indexWidgetType === 'grid' ? "kartik\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->indexWidgetType === 'grid' ? "use kartik\\export\\ExportMenu;" : "" ?>;
 
@@ -48,10 +49,27 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\ActionColumn'],
         ]]); ?>
 
+        <?php if(!empty($generator->searchModelClass)): ?>
+        
+        <?= "<?php " ?>$this->registerJs("$('.search-button').click(function(){ $('.search-form').toggle(); return false; });", View::POS_READY, 'searchBaseScriptBoilerplate');?>
 
+        <div class="btn-group" role="group">
+            <button id="w3-cols" class="btn btn-default dropdown-toggle search-button">
+                <i class="glyphicon glyphicon-search"></i>
+            </button>
+        </div>
+
+        <div class="row">
+            <div class="search-form col-lg-6" style="display:none">
+                <?= "<?php " ?>echo $this->render('_search', ['model' => $searchModel]); ?>
+            </div>
+        </div>
+        
+        <?php endif; ?>
+        
         <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
-        <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
+        'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
 
         <?php

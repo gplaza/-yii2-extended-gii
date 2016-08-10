@@ -111,6 +111,10 @@ class Generator extends DefaultGenerator {
         $column = $tableSchema->columns[$attribute];
         if ($column->phpType === 'boolean') {
             return $items_generator::generateField($attribute, null, $this->templateType, 'checkbox', null);
+        } elseif ($column->dbType === 'date') {
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type' => 'date']);
+        } elseif ($column->dbType === 'datetime') {
+            return $items_generator::generateField($attribute, 'kartik\datecontrol\DateControl', $this->templateType, 'widget', ['type' => 'datetime']);
         } else {
             return $items_generator::generateField($attribute, null, $this->templateType, null, null);
         }
