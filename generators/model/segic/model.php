@@ -131,10 +131,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     /**
     * Generates the data suitable for list-based HTML elements
     **/
-    public function getOptionList()
+    public static function getOptionList()
     {
-        $model = <?= $className ?>::find()->asArray()->all();
-        return \yii\helpers\ArrayHelper::map($model, 'id', 'nombre');
+        return \yii\helpers\ArrayHelper::map(<?= $className ?>::find()->all(), 'id', 'nombre');
     }
 <?php else: ?>
 
