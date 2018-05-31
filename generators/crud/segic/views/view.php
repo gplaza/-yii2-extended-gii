@@ -26,11 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- <h1><?= "<?= " ?>Html::encode($this->title) ?></h1> -->
 
     <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('<i class="fa fa-fw fa-pencil"></i>Actualizar') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('<i class="fa fa-fw fa-trash-o"></i>Eliminar') ?>, ['delete', <?= $urlParams ?>], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => <?= $generator->generateString('Are you sure you want to delete this item?') ?>,
+                'confirm' => <?= $generator->generateString('¿Esta seguro que desea eliminar este item?') ?>,
                 'method' => 'post',
             ],
         ]) ?>
