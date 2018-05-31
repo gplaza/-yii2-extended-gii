@@ -47,7 +47,8 @@ use yii\filters\VerbFilter;
 class <?= $controllerClass ?> extends BaseController
 {
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return array_merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
