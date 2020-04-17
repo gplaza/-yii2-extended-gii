@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -7,7 +8,7 @@
 
 namespace aayaresko\gii;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 use aayaresko\gii\components\DiffRendererHtmlInline;
 use yii\helpers\Html;
 use Yii;
@@ -22,16 +23,18 @@ use Yii;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class CodeFile extends Object
-{
+class CodeFile extends BaseObject {
+
     /**
      * The code file is new.
      */
     const OP_CREATE = 'create';
+
     /**
      * The code file already exists, and the new one may need to overwrite it.
      */
     const OP_OVERWRITE = 'overwrite';
+
     /**
      * The new code file and the existing one are identical.
      */
@@ -41,27 +44,28 @@ class CodeFile extends Object
      * @var string an ID that uniquely identifies this code file.
      */
     public $id;
+
     /**
      * @var string the file path that the new code should be saved to.
      */
     public $path;
+
     /**
      * @var string the newly generated code content
      */
     public $content;
+
     /**
      * @var string the operation to be performed. This can be [[OP_CREATE]], [[OP_OVERWRITE]] or [[OP_SKIP]].
      */
     public $operation;
-
 
     /**
      * Constructor.
      * @param string $path the file path that the new code should be saved to.
      * @param string $content the newly generated code content.
      */
-    public function __construct($path, $content)
-    {
+    public function __construct($path, $content) {
         $this->path = strtr($path, '/\\', DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR);
         $this->content = $content;
         $this->id = md5($this->path);
@@ -76,8 +80,7 @@ class CodeFile extends Object
      * Saves the code into the file specified by [[path]].
      * @return string|boolean the error occurred while saving the code file, or true if no error.
      */
-    public function save()
-    {
+    public function save() {
         $module = Yii::$app->controller->module;
         if ($this->operation === self::OP_CREATE) {
             $dir = dirname($this->path);
@@ -104,8 +107,7 @@ class CodeFile extends Object
     /**
      * @return string the code file path relative to the application base path.
      */
-    public function getRelativePath()
-    {
+    public function getRelativePath() {
         if (strpos($this->path, Yii::$app->basePath) === 0) {
             return substr($this->path, strlen(Yii::$app->basePath) + 1);
         } else {
@@ -116,8 +118,7 @@ class CodeFile extends Object
     /**
      * @return string the code file extension (e.g. php, txt)
      */
-    public function getType()
-    {
+    public function getType() {
         if (($pos = strrpos($this->path, '.')) !== false) {
             return substr($this->path, $pos + 1);
         } else {
@@ -130,8 +131,7 @@ class CodeFile extends Object
      *
      * @return boolean|string
      */
-    public function preview()
-    {
+    public function preview() {
         if (($pos = strrpos($this->path, '.')) !== false) {
             $type = substr($this->path, $pos + 1);
         } else {
@@ -152,8 +152,7 @@ class CodeFile extends Object
      *
      * @return boolean|string
      */
-    public function diff()
-    {
+    public function diff() {
         $type = strtolower($this->getType());
         if (in_array($type, ['jpg', 'gif', 'png', 'exe'])) {
             return false;
@@ -171,8 +170,7 @@ class CodeFile extends Object
      * @param mixed $lines2
      * @return string
      */
-    private function renderDiff($lines1, $lines2)
-    {
+    private function renderDiff($lines1, $lines2) {
         if (!is_array($lines1)) {
             $lines1 = explode("\n", $lines1);
         }
@@ -191,4 +189,5 @@ class CodeFile extends Object
 
         return $diff->render($renderer);
     }
+
 }
