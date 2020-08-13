@@ -21,7 +21,7 @@ class TypeAheadAsset extends AssetBundle
         'typeahead.bundle.js',
     ];
     public $depends = [
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'yii\bootstrap4\BootstrapAsset',
+        'yii\bootstrap4\BootstrapPluginAsset',
     ];
 }
