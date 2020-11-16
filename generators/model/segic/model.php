@@ -31,12 +31,13 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
+use <?= ltrim($generator->baseClass, '\\') ?>;
 
 /**
-* This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
-*
+ * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
+ *
 <?php foreach ($tableSchema->columns as $column): ?>
-* @property <?= "{$column->phpType} \${$column->name}\n" ?>
+ * @property <?= "{$column->phpType} \${$column->name}\n" ?>
 <?php if ($column->name == 'id' || $column->name == 'nombre') { $countFields++; } ?>
 <?php if ($column->dbType == 'date') { $existDateFields = true; } ?>
 <?php endforeach; ?>
@@ -44,28 +45,28 @@ use Yii;
     $generateGetOptionListMethod = true;
 } ?>
 <?php if (!empty($relations)): ?>
-*
+ *
 <?php foreach ($relations as $name => $relation): ?>
-* @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
+ * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
-*/
-class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
+ */
+<?php $pathBaseClass = explode('\\', $generator->baseClass); $pathlong = count($pathBaseClass); ?>
+class <?= $className ?> extends <?= $pathBaseClass[$pathlong-1]. " "; ?>
 {
+
     /**
-    * @inheritdoc
-    */
-    public static function tableName()
-    {
+     * @inheritdoc
+     */
+    public static function tableName() {
         return '<?= $generator->generateTableName($tableName) ?>';
     }
 <?php if ($generator->audit): ?>
 
     /**
-    * Audit
-    */
-    public function behaviors()
-    {
+     * Audit
+     */
+    public function behaviors() {
         return [
             'bedezign\yii2\audit\AuditTrailBehavior'
         ];
@@ -75,26 +76,23 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php if ($generator->db !== 'db'): ?>
 
     /**
-    * @return \yii\db\Connection the database connection used by this AR class.
-    */
-    public static function getDb()
-    {
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb() {
         return Yii::$app->get('<?= $generator->db ?>');
     }
 <?php endif; ?>
     /**
-    * @inheritdoc
-    */
-    public function rules()
-    {
+     * @inheritdoc
+     */
+    public function rules() {
         return [<?= "\n            " . implode(",\n            ", $rules) . ",\n        " ?>];
     }
 
     /**
-    * @inheritdoc
-    */
-    public function attributeLabels()
-    {
+     * @inheritdoc
+     */
+    public function attributeLabels() {
         return [
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
@@ -104,10 +102,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php foreach ($relations as $name => $relation): ?>
 
     /**
-    * @return \yii\db\ActiveQuery
-    */
-    public function get<?= $name ?>()
-    {
+     * @return \yii\db\ActiveQuery
+     */
+    public function get<?= $name ?>() {
         <?= $relation[0] . "\n" ?>
     }
 <?php endforeach; ?>
@@ -118,32 +115,21 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     ?>
 
     /**
-    * @inheritdoc
-    * @return <?= $queryClassFullName ?> the active query used by this AR class.
-    */
-    public static function find()
-    {
+     * @inheritdoc
+     * @return <?= $queryClassFullName ?> the active query used by this AR class.
+     */
+    public static function find() {
         return new <?= $queryClassFullName ?>(get_called_class());
     }
 <?php endif; ?>
 <?php if ($generateGetOptionListMethod): ?>
 
     /**
-    * Generates the data suitable for list-based HTML elements
-    **/
-    public static function getOptionList()
-    {
+     * Generates the data suitable for list-based HTML elements
+     */
+    public static function getOptionList() {
         return \yii\helpers\ArrayHelper::map(<?= $className ?>::find()->all(), 'id', 'nombre');
     }
-<?php else: ?>
-
-    /**
-    * Generates the data suitable for list-based HTML elements
-    * stub version
-    **/
-    public function getOptionList()
-    {
-        return [];
-    }
 <?php endif; ?>
+    
 }
