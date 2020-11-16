@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endif; ?>
 
     <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('<i class="fas fa-plus-circle"></i> Crear ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
+        <?= "<?= " ?>Html::a(<?= '<i class="fas fa-plus-circle"></i> Crear ' . Inflector::camel2words(StringHelper::basename($generator->modelClass)) ?>, ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php if ($generator->indexWidgetType === 'grid'): ?>
@@ -39,10 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= "<?= " ?>ExportMenu::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
         <?php
         foreach ($generator->getColumnNames() as $name) {
-            echo "            '" . $name . "',\n";
+            echo "          '" . $name . "',\n";
         }
         ?>
         ]]); ?>
@@ -89,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         }
         ?>
-        ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn'],
         ],
         ]); ?>
     <?php else: ?>
