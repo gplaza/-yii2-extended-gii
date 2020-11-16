@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
 
     <p>
-        <?= "<?= " ?>Html::a('<i class="fas fa-save"></i> Actualizar', ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
-        <?= "<?= " ?>Html::a('<i class="far fa-trash-alt"></i> Eliminar'), ['delete', <?= $urlParams ?>], [
+        <?= "<?php echo " ?>Html::a('<i class="fas fa-save"></i> Actualizar', ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
+        <?= "<?php echo " ?>Html::a('<i class="far fa-trash-alt"></i> Eliminar', ['delete', <?= $urlParams ?>], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => <?= $generator->generateString('¿Esta seguro que desea eliminar este item?') ?>,
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= "<?= " ?>DetailView::widget([
+    <?= "<?php echo " ?>DetailView::widget([
         'model' => $model,
         'attributes' => [
 <?php
