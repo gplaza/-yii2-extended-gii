@@ -26,13 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-index">
 
-    <!-- <h1><?= "<?= " ?>Html::encode($this->title) ?></h1> -->
     <?php if (!empty($generator->searchModelClass)): ?>
         <?= "    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php endif; ?>
 
     <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Crear ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
+        <?= "<?= " ?>Html::a(<?= $generator->generateString('<i class="fas fa-plus-circle"></i> Crear ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php if ($generator->indexWidgetType === 'grid'): ?>
@@ -46,7 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
             echo "            '" . $name . "',\n";
         }
         ?>
-        ['class' => 'yii\grid\ActionColumn'],
         ]]); ?>
 
         <?php if(!empty($generator->searchModelClass)): ?>
@@ -70,8 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-
         <?php
         $count = 0;
         if (($tableSchema = $generator->getTableSchema()) === false) {
@@ -93,7 +89,6 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         }
         ?>
-
         ['class' => 'yii\grid\ActionColumn'],
         ],
         ]); ?>

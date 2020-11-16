@@ -35,7 +35,7 @@ foreach ($generator->getColumnNames() as $attribute) {
 }
 ?>
     <div class="form-group">
-        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Search') ?>, ['class' => 'btn btn-primary']) ?>
+        <?= "<?= " ?>Html::submitButton(<?= $generator->generateString('Buscar') ?>, ['class' => 'btn btn-primary']) ?>
         <!-- <?= "<?= " ?>Html::resetButton(<?= $generator->generateString('Reset') ?>, ['class' => 'btn btn-default']) ?> -->
     </div>
 
