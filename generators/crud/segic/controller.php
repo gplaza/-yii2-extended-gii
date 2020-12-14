@@ -51,7 +51,7 @@ class <?= $controllerClass ?> extends BaseController
     {
         return array_merge(parent::behaviors(), [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -105,13 +105,16 @@ class <?= $controllerClass ?> extends BaseController
     {
         $model = new <?= $modelClass ?>();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()) {
+                Yii::$app->session->setFlash('success', 'Creado con exito');
+                return $this->redirect(['view', <?= $urlParams ?>]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Se ha producido un error al realizar la operación');
+            }
         }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -124,13 +127,16 @@ class <?= $controllerClass ?> extends BaseController
     {
         $model = $this->findModel(<?= $actionParams ?>);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->update()) {
+                Yii::$app->session->setFlash('success', 'Actualizado con exito');
+                return $this->redirect(['view', <?= $urlParams ?>]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Se ha producido un error al realizar la operación');
+            }
         }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     /**
