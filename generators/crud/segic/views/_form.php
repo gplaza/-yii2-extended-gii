@@ -18,11 +18,11 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap4\ActiveForm; */
 ?>
 <div class="card card-primary">
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
